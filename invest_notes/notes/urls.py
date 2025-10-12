@@ -1,11 +1,9 @@
 from django.urls import path, re_path, include
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 from rest_framework import permissions
+from rest_framework.routers import DefaultRouter
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from .views import LabelViewSet, UserViewSet
 
 
 schema_view = get_schema_view(
@@ -21,9 +19,17 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,),
 )
 
+router = DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'labels', LabelViewSet)
+
 urlpatterns = [
-    re_path('', include('djoser.urls')),
+#     path('users/', UserViewSet.as_view({'post': 'create'})),
+#     path('users/me/', UserViewSet.as_view({'get': 'me'})),
+#     path('users/activation/', UserViewSet.as_view({'post': 'activation'})),
+
     re_path('', include('djoser.urls.jwt')),
+    path('', include(router.urls)),
 
     path('swagger<format>/',
          schema_view.without_ui(cache_timeout=0),

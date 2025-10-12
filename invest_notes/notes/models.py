@@ -1,16 +1,17 @@
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
-from django.contrib.auth import get_user_model
-
+from django.contrib.auth.models import AbstractUser
 from .validators import validate_title
 
 
-User = get_user_model()
+class User(AbstractUser):
+    email = models.EmailField(unique=True, verbose_name='электронная почта',
+                              help_text='введите email')
 
 
 class Label(models.Model):
-    owner = models.ForeignKey(User, verbose_name="владелец метки",
+    owner = models.ForeignKey(User, verbose_name='владелец метки',
                               on_delete=models.CASCADE, related_name='labels')
 
     title = models.CharField(max_length=64, verbose_name='Метка',
@@ -22,8 +23,8 @@ class Label(models.Model):
         verbose_name = 'метка'
         verbose_name_plural = 'Метки'
         ordering = ('title',)
-        UniqueConstraint(Lower('title'), 'owner',
-                         name='unique_label_per_user_case_insensitive')
+        constraints = [UniqueConstraint(Lower('title'), 'owner',
+                       name='unique_label_per_user_case_insensitive'),]
         indexes = [models.Index(fields=['owner'])]
 
     def __str__(self):
