@@ -3,7 +3,6 @@ from rest_framework import status
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
-from django.shortcuts import get_object_or_404
 from djoser.utils import encode_uid
 
 
