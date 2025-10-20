@@ -1,6 +1,11 @@
+import os
+
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
 
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -9,10 +14,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m--dhg9j99u8px%4+$m67s!7o(91y5ipoib1#+^!(0@w1q4+w-'
+SECRET_KEY = os.getenv('SECRET_KEY', 'DEFAULT_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'DEFAULT_KEY')
 
 ALLOWED_HOSTS = []
 
@@ -80,11 +85,11 @@ WSGI_APPLICATION = 'invest_notes.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "invest_notes",
-        "USER": "postgres",
-        "PASSWORD": "R322FF",
-        "HOST": "127.0.0.1",
-        "PORT": "5433",
+        "NAME": os.getenv("DB_NAME", "DEFAULT_KEY"),
+        "USER": os.getenv("DB_USER", "DEFAULT_KEY"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "DEFAULT_KEY"),
+        "HOST": os.getenv("DB_HOST", "DEFAULT_KEY"),
+        "PORT": os.getenv("DB_PORT", "DEFAULT_KEY"),
     }
 }
 
