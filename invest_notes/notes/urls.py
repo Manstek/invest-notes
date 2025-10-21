@@ -21,7 +21,7 @@ schema_view = get_schema_view(
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
-router.register(r'labels', LabelViewSet)
+router.register(r'labels', LabelViewSet, basename='labels')
 
 urlpatterns = [
 #     path('users/', UserViewSet.as_view({'post': 'create'})),
