@@ -1,7 +1,7 @@
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import BasePermission, IsAuthenticated
 
 
-class IsAuthor(BasePermission):
+class IsAuthor(IsAuthenticated):
 
     def has_object_permission(self, request, view, obj):
         """Доступ только владельцу объекта."""

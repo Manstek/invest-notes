@@ -12,7 +12,7 @@ class UserViewSet(views.UserViewSet):
 
 class LabelViewSet(viewsets.GenericViewSet, mixins.DestroyModelMixin,
                    mixins.CreateModelMixin, mixins.ListModelMixin,
-                   mixins.UpdateModelMixin):
+                   mixins.UpdateModelMixin, mixins.RetrieveModelMixin):
     queryset = Label.objects.all()
     serializer_class = LabelSerializer
     http_method_names = ['post', 'get', 'delete', 'patch']
@@ -25,7 +25,7 @@ class LabelViewSet(viewsets.GenericViewSet, mixins.DestroyModelMixin,
         return [IsAuthor(), ]
 
     def get_queryset(self):
-        return Label.objects.filter(owner=self.request.user)
+        return Label.objects.filter(owner__id=self.request.user.id)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

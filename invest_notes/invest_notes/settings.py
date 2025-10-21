@@ -170,3 +170,5 @@ DJOSER = {
             'notes.serializers.CustomUserCreateSerializer',
     },
 }
+
+SWAGGER_USE_COMPAT_RENDERERS = False
